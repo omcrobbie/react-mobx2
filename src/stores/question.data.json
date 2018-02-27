@@ -88,7 +88,7 @@
                 },
                 {
                     "model-id": 6,
-                    "name": "household-total--net-worth",
+                    "name": "household-total-net-worth",
                     "description": "Household Net worth  in round $ (e.g. 10000000)",
                     "source": "ADVISOR",
                     "type": "INTEGER",
@@ -105,7 +105,7 @@
             "variable-list": [
                 {
                     "model-id": 7,
-                    "name": "investment-amount",
+                    "name": "target-investment-amount",
                     "description": "How much do you want to invest?  in round $ (e.g. 10000000)",
                     "source": "CLIENT",
                     "type": "INTEGER",
@@ -113,7 +113,7 @@
                 },
                 {
                     "model-id": 8,
-                    "name": "investment-period",
+                    "name": "target-investment-period",
                     "description": "Time horizon for Investment",
                     "source": "CLIENT",
                     "type": "LIST_SELECT_ONE",
@@ -497,7 +497,7 @@
             "variable-list": [
                 {
                     "model-id": 7,
-                    "name": "investment-amount",
+                    "name": "target-investment",
                     "description": "How much do you want to invest?  in round $ (e.g. 10000000)",
                     "source": "CLIENT",
                     "type": "INTEGER",
@@ -505,7 +505,7 @@
                 },
                 {
                     "model-id": 19,
-                    "name": "risk-capacity",
+                    "name": "risk-tolerance",
                     "description": "how much risk you are able to take given your current life situation",
                     "source": "ALGORITHM",
                     "type": "ALGORITHM",

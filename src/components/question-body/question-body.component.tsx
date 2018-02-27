@@ -74,8 +74,7 @@ export const QuestionbodyComponent = observer((props) => {
                     </div>
                 )
             default:
-                console.warn('not found: ', model.type)
-                return <input key={model.modelId}/>
+                return <input type="text" key={model.modelId}/>
         }
     }
     const parts = question.template

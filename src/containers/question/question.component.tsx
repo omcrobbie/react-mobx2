@@ -6,6 +6,7 @@ import { QuestionStore } from "../../stores/question.store";
 import { LoaderComponent } from "../../components/loader/loading.component";
 import { QuestionModel } from "../../models/question.model";
 import { QuestionbodyComponent } from "../../components/question-body/question-body.component";
+import { QuestionContentComponent } from "../question-content/question-content.component";
 
 @inject('questionStore')
 @observer
@@ -22,23 +23,21 @@ export class QuestionComponent extends React.Component<{questionStore?: Question
     }
     
     render() {
-        const { currentQuestion, next, previous, isLoading, classState } = this.questionStore;
-        const isDefined = (key) => !!currentQuestion ? currentQuestion[key] : '';
+        const { 
+            currentQuestion,
+            next, 
+            previous, 
+            isLoading, 
+            classState, 
+        } = this.questionStore;
         return (
             <LoaderComponent predicate={isLoading}>
-                <div className={"question-view " + classState }>
-                    <div className="question-container">
-                        <p className="question-num">{ 'Question: '+ (isDefined('order'))}</p>
-                        <p className="question-header">{isDefined('question')}</p>
-                        <QuestionbodyComponent question={currentQuestion} />
-                        <p className="question-setup">{isDefined('setup')}</p>
-                    </div>
-                    <ButtonBar 
-                        next={next} 
-                        previous={previous} 
-                        cantSkip={isDefined('requiredToProceed')}
-                    />
-                </div>
+                <QuestionContentComponent
+                    classState={classState}
+                    currentQuestion={currentQuestion}
+                    previous={previous}
+                    next={next}
+                />
             </LoaderComponent>
         );
     }
