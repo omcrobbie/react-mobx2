@@ -1,4 +1,4 @@
-import { observable, computed, action, runInAction } from 'mobx';
+import { observable, computed, action, runInAction, autorun } from 'mobx';
 import { httpClient } from '../utils/http-client.util';
 import { QuestionModel } from '../models/question.model';
 
@@ -9,22 +9,38 @@ const ClassState = {
     NEXT: 'question-next'
 }
 export class QuestionStore {
-    private _questions: QuestionModel[];
+    @observable private _questions: QuestionModel[];
     @observable currentQuestion: QuestionModel;
     @observable isLoading: boolean = false;
-    @observable classState: string = 'normal';
+    @observable classState: string = ClassState.NORM;
+    @observable questionsCompletePercent: number
     private currentQuestionIdx: number;
 
     fetchQuestions() {
-        // TODO: swap this for an actual service call
         this.setLoading(async () => {
+            // TODO: swap this for an actual service call
             await this.delay(1000);
             const data = require('./question.data.json');
+            
             const clientId = data['client-id'];
-            this._questions = data['page-list'].map(question => new QuestionModel(question));
-            this._questions.forEach(q => q.variableList.forEach(m => m.value.clientId = clientId));
+            runInAction(() => {
+                this._questions = data['page-list']
+                    .map(question => new QuestionModel(question));
+            });
+            this._questions
+                .forEach(q => q.variableList
+                .forEach(m => m.value.clientId = clientId));
+            autorun(() => {
+                const percent = this.percentComplete;
+                runInAction(() =>  this.questionsCompletePercent = percent);
+            });
             this.getQuestion();
         });
+    }
+    @computed
+    get percentComplete() {
+        const completedQuestions = this._questions.filter(q => q.answered).length;
+        return Math.round(completedQuestions / this.questionCount * 100);  
     }
     @action
     async setLoading(asyncFn) {

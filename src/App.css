@@ -40,3 +40,7 @@
 .question-tween {
   transition: all 800ms;
 }
+.progress-bar {
+  height: 20px;
+  background: #1B93EE;
+}

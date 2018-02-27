@@ -31,7 +31,6 @@ export class QuestionModel {
     }
     @computed
     get allAnswered() {
-        return this.variableList.every(m => !!m.value.value);
-        
+        return this.variableList.every(m => !!m.value.value);   
     }
 }

@@ -28,7 +28,8 @@ export class QuestionComponent extends React.Component<{questionStore?: Question
             next, 
             previous, 
             isLoading, 
-            classState, 
+            classState,
+            questionsCompletePercent 
         } = this.questionStore;
         return (
             <LoaderComponent predicate={isLoading}>
@@ -37,6 +38,7 @@ export class QuestionComponent extends React.Component<{questionStore?: Question
                     currentQuestion={currentQuestion}
                     previous={previous}
                     next={next}
+                    questionsCompletePercent={questionsCompletePercent}
                 />
             </LoaderComponent>
         );

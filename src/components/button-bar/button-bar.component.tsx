@@ -23,7 +23,6 @@ import { observer } from "mobx-react";
 // }
 export const ButtonBar = observer((props) => {
   const { next, previous, cantSkip, answered } = props;
-  console.log(answered);
   return (
     <div style={{dispay:'relative'}}>
       <div className="bb-container grid-x" style={{bottom: cantSkip ? 0 : 50}}>
