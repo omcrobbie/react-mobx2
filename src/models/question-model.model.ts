@@ -19,6 +19,7 @@ export class QuestionModelModel {
     type: string;
     global: boolean;
     value: QuestionModelValue = new QuestionModelValue();
+    _values: number[];
     optionList?: QuestionModelOption[]
     constructor(data: any) {
         const skipValues = ['option-list', 'value'];
@@ -27,8 +28,15 @@ export class QuestionModelModel {
             if (isSkip(p)) {
                 this[kebabToCamel(p)] = data[p];
             } else if (!isSkip(p) && p === skipValues[0]) {
-                this.optionList = data[skipValues[0]].map(val => new QuestionModelOption(val) );
+                this.optionList = data[skipValues[0]]
+                    .map(val => new QuestionModelOption(val) );
             }
         }       
     }
+    setValues() {
+        this._values = this.optionList!
+            .filter(opt => opt.selected)
+            .map(opt => opt.optionId);
+    }
+
 }

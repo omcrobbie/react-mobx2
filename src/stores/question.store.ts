@@ -58,14 +58,12 @@ export class QuestionStore {
             this.currentQuestionIdx + 1,
             `${ClassState.PREV} ${ClassState.TWEEN}`,
             ClassState.NEXT);
-        //this.getQuestion(this.currentQuestionIdx + 1);
     }
     previous = () => {
         this.setQuestion(
             this.currentQuestionIdx - 1,
             `${ClassState.NEXT} ${ClassState.TWEEN}`,
             ClassState.PREV);
-        //this.getQuestion(this.currentQuestionIdx -1);
     }
     private delay(t = 1000) {
         return new Promise(done => {

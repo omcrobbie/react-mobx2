@@ -31,8 +31,13 @@ export class QuestionComponent extends React.Component<{questionStore?: Question
                         <p className="question-num">{ 'Question: '+ (isDefined('order'))}</p>
                         <p className="question-header">{isDefined('question')}</p>
                         <QuestionbodyComponent question={currentQuestion} />
+                        <p className="question-setup">{isDefined('setup')}</p>
                     </div>
-                    <ButtonBar next={next} previous={previous} cantSkip={isDefined('requiredToProceed')}/>
+                    <ButtonBar 
+                        next={next} 
+                        previous={previous} 
+                        cantSkip={isDefined('requiredToProceed')}
+                    />
                 </div>
             </LoaderComponent>
         );
