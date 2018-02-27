@@ -6,7 +6,7 @@ import './loading.css';
 export class LoaderComponent extends React.Component<{predicate: any}> {
     render() {
         const { children, predicate } = this.props;
-        if (predicate) {
+        if (!predicate) {
             return (
                 <div>
                     {children}

@@ -22,11 +22,11 @@ export class QuestionComponent extends React.Component<{questionStore?: Question
     }
     
     render() {
-        const { currentQuestion, next, previous } = this.questionStore;
+        const { currentQuestion, next, previous, isLoading, classState } = this.questionStore;
         const isDefined = (key) => !!currentQuestion ? currentQuestion[key] : '';
         return (
-            <LoaderComponent predicate={!!currentQuestion}>
-                <div className="question-view">
+            <LoaderComponent predicate={isLoading}>
+                <div className={"question-view " + classState }>
                     <div className="question-container">
                         <p className="question-num">{ 'Question: '+ (isDefined('order'))}</p>
                         <p className="question-header">{isDefined('question')}</p>

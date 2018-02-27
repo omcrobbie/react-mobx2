@@ -28,3 +28,15 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+.question-next {
+  transform: translateX(300%);
+}
+.question-prev {
+  transform: translateX(-300%);
+}
+.question-normal {
+  transform: translateX(0);
+}
+.question-tween {
+  transition: all 800ms;
+}
