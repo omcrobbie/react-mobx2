@@ -1,5 +1,5 @@
 import { QuestionModelValue } from './question-model-value.model';
-import { camelToKebab, kebabToCamel } from '../utils/model.util';
+import { kebabToCamel } from '../utils/model.util';
 import { QuestionModelOption } from './question-model-option.model';
 
 export const ModelType = {

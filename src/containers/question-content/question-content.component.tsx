@@ -6,21 +6,33 @@ import { ProgressbarComponent } from '../../components/progres-bar';
 
 export const QuestionContentComponent = observer((props) => {
     const { order, question, setup, requiredToProceed, answered} = props.currentQuestion;
+    const isComplete = () => {
+        if (!props.complete) {
+            return (
+                <div>
+                    <ProgressbarComponent progress={props.questionsCompletePercent} />
+                    <div className="question-container">
+                        <p className="question-num">{ 'Question: '+ order}</p>
+                        <p className="question-header">{question}</p>
+                        <QuestionbodyComponent question={props.currentQuestion} />
+                        <p className="question-setup">{setup}</p>
+                    </div>
+                    <ButtonBar 
+                        next={props.next} 
+                        previous={props.previous} 
+                        cantSkip={requiredToProceed}
+                        answered={answered}
+                    />
+                </div>
+            )
+        }
+        return (
+            <div>COMPLETE</div>
+        )
+    }
     return (
         <div className={"question-view " + props.classState }>
-            <ProgressbarComponent progress={props.questionsCompletePercent} />
-            <div className="question-container">
-                <p className="question-num">{ 'Question: '+ order}</p>
-                <p className="question-header">{question}</p>
-                <QuestionbodyComponent question={props.currentQuestion} />
-                <p className="question-setup">{setup}</p>
-            </div>
-            <ButtonBar 
-                next={props.next} 
-                previous={props.previous} 
-                cantSkip={requiredToProceed}
-                answered={answered}
-            />
+            {isComplete()}
         </div>
     )
 });

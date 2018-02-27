@@ -1,6 +1,6 @@
 import { QuestionModelModel } from './question-model.model';
 import { kebabToCamel } from "../utils/model.util";
-import { observable, when, action, autorun, observe, computed, runInAction } from 'mobx';
+import { observable, autorun, computed, runInAction } from 'mobx';
 
 export class QuestionModel {
     order: number;

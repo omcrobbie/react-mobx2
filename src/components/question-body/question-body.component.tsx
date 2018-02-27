@@ -2,7 +2,6 @@ import * as React from 'react';
 import { QuestionModel } from '../../models/question.model';
 import './question-body.css';
 import { QuestionModelModel, ModelType } from '../../models/question-model.model';
-import * as ReactDOM from 'react-dom';
 import { observer } from 'mobx-react';
 import { QuestionModelOption } from '../../models/question-model-option.model';
 

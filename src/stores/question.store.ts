@@ -1,5 +1,4 @@
 import { observable, computed, action, runInAction, autorun } from 'mobx';
-import { httpClient } from '../utils/http-client.util';
 import { QuestionModel } from '../models/question.model';
 
 const ClassState = {
@@ -14,6 +13,7 @@ export class QuestionStore {
     @observable isLoading: boolean = false;
     @observable classState: string = ClassState.NORM;
     @observable questionsCompletePercent: number
+    @observable complete = false;
     private currentQuestionIdx: number;
 
     fetchQuestions() {
@@ -21,7 +21,7 @@ export class QuestionStore {
             // TODO: swap this for an actual service call
             await this.delay(1000);
             const data = require('./question.data.json');
-            
+            //
             const clientId = data['client-id'];
             runInAction(() => {
                 this._questions = data['page-list']
@@ -31,16 +31,18 @@ export class QuestionStore {
                 .forEach(q => q.variableList
                 .forEach(m => m.value.clientId = clientId));
             autorun(() => {
-                const percent = this.percentComplete;
+                const percent = this.percentComplete();
                 runInAction(() =>  this.questionsCompletePercent = percent);
             });
             this.getQuestion();
         });
     }
     @computed
-    get percentComplete() {
-        const completedQuestions = this._questions.filter(q => q.answered).length;
-        return Math.round(completedQuestions / this.questionCount * 100);  
+    get questionsComplete() {
+        return this._questions.filter(q => q.answered).length;
+    }
+    percentComplete() {
+        return Math.round(this.questionsComplete / this.questionCount * 100);  
     }
     @action
     async setLoading(asyncFn) {
@@ -70,10 +72,14 @@ export class QuestionStore {
         this.currentQuestionIdx = idx;
     }
     next = () => {
-        this.setQuestion(
-            this.currentQuestionIdx + 1,
-            `${ClassState.PREV} ${ClassState.TWEEN}`,
-            ClassState.NEXT);
+        if (this.questionsComplete === this.questionCount) {
+            runInAction(() => this.complete = true);
+        } else {
+            this.setQuestion(
+                this.currentQuestionIdx + 1,
+                `${ClassState.PREV} ${ClassState.TWEEN}`,
+                ClassState.NEXT);
+        }
     }
     previous = () => {
         this.setQuestion(

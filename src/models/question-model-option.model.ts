@@ -1,4 +1,4 @@
-import { camelToKebab, kebabToCamel } from "../utils/model.util";
+import { kebabToCamel } from "../utils/model.util";
 import { observable, action } from "mobx";
 
 export class QuestionModelOption {

@@ -1,11 +1,9 @@
 import * as React from "react";
 import './question.css';
-import { ButtonBar } from "../../components/button-bar/button-bar.component";
 import { inject, observer } from "mobx-react";
 import { QuestionStore } from "../../stores/question.store";
 import { LoaderComponent } from "../../components/loader/loading.component";
 import { QuestionModel } from "../../models/question.model";
-import { QuestionbodyComponent } from "../../components/question-body/question-body.component";
 import { QuestionContentComponent } from "../question-content/question-content.component";
 
 @inject('questionStore')
@@ -29,6 +27,7 @@ export class QuestionComponent extends React.Component<{questionStore?: Question
             previous, 
             isLoading, 
             classState,
+            complete,
             questionsCompletePercent 
         } = this.questionStore;
         return (
@@ -39,6 +38,7 @@ export class QuestionComponent extends React.Component<{questionStore?: Question
                     previous={previous}
                     next={next}
                     questionsCompletePercent={questionsCompletePercent}
+                    complete={complete}
                 />
             </LoaderComponent>
         );
