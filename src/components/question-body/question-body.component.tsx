@@ -4,55 +4,56 @@ import './question-body.css';
 import { QuestionModelModel, ModelType } from '../../models/question-model.model';
 import * as ReactDOM from 'react-dom';
 import { observer } from 'mobx-react';
-@observer
-export class QuestionbodyComponent extends React.Component<any> {
-    node: Element;
-    componentDidMount() {
-        this.node = ReactDOM.findDOMNode(this.refs.questionBody);
-        this.interpolate();
-    }
-    componentDidUpdate() {
-        
-        Array.from(this.node.children).forEach(child => ReactDOM.findDOMNode(child).remove());
-        this.interpolate();
-    }
-    interpolate() {
-        const question: QuestionModel = this.props.question;
-        const modelHash = question.variableList.reduce((ac, model) => {
-            ac[model.name] = model;
-            return ac;
-        }, {});
-        const symbols = question.template.match(/(?!<)(\S+)(?=>)/g);
-        const parts = question.template.split(/\<\S+\>/).filter(p => p);
-        const node = ReactDOM.findDOMNode(this.refs.questionBody);
-        for(const part of parts) {
-            const text = document.createElement('span');
-            text.innerHTML = part;
-            node.appendChild(text);
-            if (symbols && symbols.length) {
-                const model = modelHash[symbols.shift()!];
-                const modelNode = this.getElement(model || {type:null});
-                node.appendChild(modelNode as Node);
-            }
-        }
-    }
-    getElement(model: QuestionModelModel) {
+
+export const QuestionbodyComponent = observer((props) => {
+    const question: QuestionModel = props.question;
+    const modelHash = question.variableList.reduce((ac, model) => {
+        ac[model.name] = model;
+        return ac;
+    }, {});
+    const getElement = (model: QuestionModelModel) => {
         switch(model.type){
             case ModelType.INT:
-                let inputElem = React.createElement('input', {type: 'number'});
-                inputElem.props.onChange = (evt) => console.log(evt.target.value);
-                return inputElem;
+                return (
+                    <input 
+                        key={model.modelId} 
+                        type='number' 
+                        onChange={(evt) => console.log(evt.target.value) }/>
+                )
             case ModelType.LIST_ONE:
-                let selectElem = React.createElement('select');
-                return selectElem;
+                return (
+                    <select key={model.modelId}>
+                        {model.optionList!.map(opt => 
+                        <option
+                            key={opt.optionId} 
+                            selected={opt.selected} 
+                            value={opt.name}>{opt.description}
+                        </option>) }
+                    </select>
+                )
             default:
-                return React.createElement('input');
+                return <input key={model.modelId}/>
         }
     }
-    render() {
-        return (
-            <div ref="questionBody">
-            </div>
-        )
-    }
-}
+    const parts = question.template
+        .split(/(<\S+>)/)
+        .filter(p => p);
+    return (
+        <div>
+            {
+                parts.map((part) => {
+                    if (part.match(/<\S+>/)) {
+                        const key = /<(\S+)>/.exec(part)![1];
+                        const model = modelHash[key];
+                        if (model) {
+                            return getElement(model);
+                        }
+                        return <span key={key}>NOT FOUND</span>;
+                    } else {
+                        return (<span key={part}>{part}</span>)
+                    }
+                })
+            }
+        </div>
+    )
+});

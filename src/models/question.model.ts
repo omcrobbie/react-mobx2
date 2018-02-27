@@ -14,7 +14,8 @@ export class QuestionModel {
             if (p !== skipValue) {
                 this[kebabToCamel(p)] = data[p];
             } else if (p === skipValue ) {
-                this.variableList = data[skipValue].map(val => new QuestionModelModel(val) );
+                this.variableList = data[skipValue]
+                    .map(val => new QuestionModelModel(val) );
             }
         }
     }
