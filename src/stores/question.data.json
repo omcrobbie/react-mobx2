@@ -88,7 +88,7 @@
                 },
                 {
                     "model-id": 6,
-                    "name": "household-net-worth",
+                    "name": "household-total-net-worth",
                     "description": "Household Net worth  in round $ (e.g. 10000000)",
                     "source": "ADVISOR",
                     "type": "INTEGER",

@@ -1,22 +1,41 @@
-import { observable, computed } from 'mobx';
+import { observable, computed, action } from 'mobx';
 import { httpClient } from '../utils/http-client.util';
 import { QuestionModel } from '../models/question.model';
 export class QuestionStore {
     private _questions: QuestionModel[];
-    @observable questions: QuestionModel[];
+    @observable currentQuestion: QuestionModel;
+    private currentQuestionIdx: number;
 
-    constructor() {
-        const data = require('./question.data.json');
+    async fetchQuestions() {
+        // TODO: swap this for an actual service call
+        await this.delay(1000);
+        const data = await Promise.resolve(require('./question.data.json'));
         this._questions = data['page-list'].map(question => new QuestionModel(question));
-        console.log(this._questions);
+        this.getQuestion();
     }
     
-    @computed get questionCount() {
-        return this.questions.length;
+    get questionCount() {
+        return this._questions.length;
     }
-    async getQuestions(clientId:number) {
-        const data = await httpClient(`/clients/${clientId}/questionnaire`, 'GET')
-        this.questions = data.map((question:any) => new QuestionModel(question));
+    @action
+    getQuestion(idx = 0) {
+        if (this._questions[idx]) {
+            this.currentQuestion = this._questions[idx];
+            this.currentQuestionIdx = idx;
+        }
+    }
+    next = () => {
+        this.getQuestion(this.currentQuestionIdx + 1);
+    }
+    previous = () => {
+        this.getQuestion(this.currentQuestionIdx -1);
+    }
+    private delay(t = 1000) {
+        return new Promise(done => {
+            setTimeout(() => {
+                done();
+            }, t);
+        })
     }
 
 }

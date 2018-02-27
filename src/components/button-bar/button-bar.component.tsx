@@ -21,16 +21,17 @@ import "./button-bar.css";
 //     }
 // }
 export const ButtonBar = props => {
+  const { next, previous, skip } = props;
   return (
     <div style={{dispay:'relative'}}>
       <div className="bb-container grid-x">
-        <div className="bb-button back medium-6 cell">
+        <div className="bb-button back medium-6 cell" onClick={() => previous()}>
           <span>Back</span>
         </div>
-        <div className="bb-button next medium-6 cell">
+        <div className="bb-button next medium-6 cell" onClick={() => next()}>
           <span>Next</span>
         </div>
-        <div className="bb-button skip">
+        <div className="bb-button skip" onClick={() => next()}>
             <span>Skip</span>
         </div>
       </div>
