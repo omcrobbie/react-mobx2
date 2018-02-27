@@ -3,7 +3,7 @@ import './question.css';
 import { ButtonBar } from "../../components/button-bar/button-bar.component";
 import { inject, observer } from "mobx-react";
 import { QuestionStore } from "../../stores/question.store";
-import { LoaderComponent } from "../../components/loading.component";
+import { LoaderComponent } from "../../components/loader/loading.component";
 import { QuestionModel } from "../../models/question.model";
 import { QuestionbodyComponent } from "../../components/question-body/question-body.component";
 
@@ -32,7 +32,7 @@ export class QuestionComponent extends React.Component<{questionStore?: Question
                         <p className="question-header">{isDefined('question')}</p>
                         <QuestionbodyComponent question={currentQuestion} />
                     </div>
-                    <ButtonBar next={next} previous={previous}/>
+                    <ButtonBar next={next} previous={previous} cantSkip={isDefined('requiredToProceed')}/>
                 </div>
             </LoaderComponent>
         );

@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
+import './loading.css';
 
 @observer
 export class LoaderComponent extends React.Component<{predicate: any}> {
@@ -13,8 +14,8 @@ export class LoaderComponent extends React.Component<{predicate: any}> {
             )
         }
         return (
-            <div>
-                LOADING...
+            <div className="ring-container">
+                <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
             </div>
         )
     }

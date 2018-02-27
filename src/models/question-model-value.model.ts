@@ -1,16 +1,15 @@
+import { observable, action } from "mobx";
 
 
 export class QuestionModelValue {
     clientId: number;
     timestamp: number;
-    _value: string;
+    @observable value: string = '';
     validated: boolean = false;
 
-    set value(val) {
+    @action
+    setValue(val) {
         this.timestamp = new Date().getTime();
-        this._value = val;
-    }
-    get value() {
-        return this._value
+        this.value = val;
     }
 }

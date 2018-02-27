@@ -17,12 +17,15 @@ export const QuestionbodyComponent = observer((props) => {
                 return (
                     <input 
                         key={model.modelId} 
-                        type='number' 
-                        onChange={(evt) => console.log(evt.target.value) }/>
+                        type='number'
+                        value={model.value.value} 
+                        onChange={(evt) => model.value.setValue(evt.target.value) }/>
                 )
             case ModelType.LIST_ONE:
                 return (
-                    <select key={model.modelId}>
+                    <select 
+                        key={model.modelId}
+                        onChange={(evt) => model.value.value = evt.target.value}>
                         {model.optionList!.map(opt => 
                         <option
                             key={opt.optionId} 
