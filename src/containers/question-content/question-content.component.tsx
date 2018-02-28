@@ -3,6 +3,7 @@ import { QuestionbodyComponent } from '../../components/question-body/question-b
 import { ButtonBar } from '../../components/button-bar/button-bar.component';
 import { observer } from 'mobx-react';
 import { ProgressbarComponent } from '../../components/progres-bar';
+import './question-content.css';
 
 export const QuestionContentComponent = observer((props) => {
     const { page, question, setup, requiredToProceed, answered} = props.currentQuestion;

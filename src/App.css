@@ -9,6 +9,10 @@
   height: 80px;
 }
 
+
+html > * {
+  font-family: "Lato", sans-serif !important;
+}
 .App-header {
   background-color: #222;
   height: 150px;

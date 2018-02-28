@@ -24,6 +24,7 @@ export const QuestionbodyComponent = observer((props) => {
                         type='number'
                         value={model.value.value} 
                         onChange={(evt) => model.value.setValue(evt.target.value) }
+                        className='style-reset question-body-input'
                     />
                 )
             case ModelType.LIST_ONE:
@@ -38,7 +39,9 @@ export const QuestionbodyComponent = observer((props) => {
                                 setOneSelected(evt.currentTarget.selectedIndex -1, model.optionList!);
                                 }
                             }
-                        }>
+                        }
+                        className="style-reset question-body-select"
+                        >
                         <option value=''>Select...</option>
                         {model.optionList!.map(opt => 
                         <option
@@ -58,7 +61,7 @@ export const QuestionbodyComponent = observer((props) => {
                             height: '200px'
                         }}>
                         {model.optionList!.map(opt => 
-                            <label key={opt.optionId}>
+                            <label key={opt.optionId} className='question-body-radio'>
                                 <input 
                                     checked={opt.selected}
                                     type='radio'
@@ -79,6 +82,7 @@ export const QuestionbodyComponent = observer((props) => {
                         type="text" 
                         key={model.modelId}
                         value={model.value.value}
+                        className='style-reset question-body-input'
                         onChange={(evt) => model.value.setValue(evt.target.value)}
                     />
                 );
@@ -104,7 +108,12 @@ export const QuestionbodyComponent = observer((props) => {
                             MODEL NOT FOUND
                         </span>);
                     } else {
-                        return (<span key={part}>{part}</span>)
+                        return (
+                            <span 
+                                className='question-body-text' 
+                                key={part}>{part}
+                            </span>
+                        );
                     }
                 })
             }
