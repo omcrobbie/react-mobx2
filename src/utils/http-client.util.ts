@@ -2,13 +2,17 @@ import { ModelType } from './../models/question-model.model';
 import { QuestionModel } from '../models/question.model';
 
 async function httpClient(url: string, method: string, body: any = {}) {
-    const res = await fetch(`http://34.216.109.58:8080/v1/${url}`, {
+    const {
+        REACT_APP_BASE_API_URL, // env variables must be prefixed with REACT_APP_
+        REACT_APP_API_SECRET, 
+        REACT_APP_API_TOKEN
+    } = process.env;
+    const res = await fetch(`${REACT_APP_BASE_API_URL}/${url}`, {
         method,
         body,
         headers: new Headers({
-            //'api-key': '4275578e2e3e4f179b92773b1717eea8',
-            'app-secret': '80ddbdaa90634a75975168cb9b04c6f5',
-            'token': '59ae89f11e7e495b8bb8619b80ac2ca2'
+            'app-secret': REACT_APP_API_SECRET!,
+            'token': REACT_APP_API_TOKEN!
             }
         )
     });
