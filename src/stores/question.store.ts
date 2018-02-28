@@ -32,7 +32,6 @@ export class QuestionStore {
                 .forEach(m => m.value.clientId = clientId));
             autorun(() => {
                 const percent = this.percentComplete();
-                console.log(percent);
                 runInAction(() =>  this.questionsCompletePercent = percent);
             });
             this.getQuestion();

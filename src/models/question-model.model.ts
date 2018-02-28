@@ -1,3 +1,4 @@
+import { runInAction } from 'mobx';
 import { QuestionModelValue } from './question-model-value.model';
 import { kebabToCamel } from '../utils/model.util';
 import { QuestionModelOption } from './question-model-option.model';
@@ -34,9 +35,12 @@ export class QuestionModelModel {
         }       
     }
     setValues() {
-        this._values = this.optionList!
-            .filter(opt => opt.selected)
-            .map(opt => opt.optionId);
+        if (this.optionList) {
+            this._values = this.optionList
+                .filter(opt => opt.selected)
+                .map(opt => opt.optionId);
+            runInAction(() => this.value.value = this._values.join(' '));
+        }
     }
 
 }

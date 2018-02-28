@@ -74,7 +74,14 @@ export const QuestionbodyComponent = observer((props) => {
                     </div>
                 )
             default:
-                return <input type="text" key={model.modelId}/>
+                return (
+                    <input 
+                        type="text" 
+                        key={model.modelId}
+                        value={model.value.value}
+                        onChange={(evt) => model.value.setValue(evt.target.value)}
+                    />
+                );
         }
     }
     const parts = question.template
