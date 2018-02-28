@@ -5,7 +5,7 @@ export class QuestionModelOption {
     optionId: number;
     name: string;
     description: string;
-    @observable selected: boolean;
+    @observable selected = false;
     factor: number;
     constructor(data: any) {
         for(let p of Object.keys(data)) {

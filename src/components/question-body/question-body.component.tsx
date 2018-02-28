@@ -15,9 +15,6 @@ export const QuestionbodyComponent = observer((props) => {
         options.forEach(option => option.setSelected(false) );
         options[idx].setSelected(true);
     };
-    const getOneSelected = (options: QuestionModelOption[]) => {
-        return options.find(opt => opt.selected)!.name;
-    }
     const getElement = (model: QuestionModelModel) => {
         switch(model.type){
             case ModelType.INT:
@@ -33,12 +30,16 @@ export const QuestionbodyComponent = observer((props) => {
                 return (
                     <select 
                         key={model.modelId}
-                        value={getOneSelected(model.optionList!)}
-                        onChange={(evt) => { 
-                            model.value.value = evt.target.value;
-                            setOneSelected(evt.target.selectedIndex, model.optionList!);
+                        value={model.value.value}
+                        onChange={(evt) => {
+                            evt.preventDefault(); 
+                            model.value.setValue(evt.target.value);
+                            if (evt.target.value) {
+                                setOneSelected(evt.currentTarget.selectedIndex -1, model.optionList!);
+                                }
                             }
                         }>
+                        <option value=''>Select...</option>
                         {model.optionList!.map(opt => 
                         <option
                             key={opt.optionId} 

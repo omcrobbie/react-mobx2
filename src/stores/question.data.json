@@ -136,7 +136,7 @@
                             "option-id": 3,
                             "name": "period-greater-10-years",
                             "description": "the long term (>10 years)",
-                            "selected": true,
+                            "selected": false,
                             "factor": 1
                         },
                         {
@@ -201,21 +201,21 @@
                             "option-id": 5,
                             "name": "industry-financials",
                             "description": "financials/consumer services and retail",
-                            "selected": true,
+                            "selected": false,
                             "factor": -0.5
                         },
                         {
                             "option-id": 6,
                             "name": "industry-industrials",
                             "description": "industrials or technology",
-                            "selected": true,
+                            "selected": false,
                             "factor": 0.1
                         },
                         {
                             "option-id": 7,
                             "name": "industry-healthcare",
                             "description": "health care or food and household staples",
-                            "selected": true,
+                            "selected": false,
                             "factor": -0.1
                         },
                         {
@@ -269,7 +269,7 @@
                             "option-id": 13,
                             "name": "pay-varies",
                             "description": "Pay varies quite a bit or a large portion of it is bonus/commission",
-                            "selected": true,
+                            "selected": false,
                             "factor": 0.077423809181
                         }
                     ],
@@ -295,7 +295,7 @@
                             "option-id": 14,
                             "name": "health-issue-none",
                             "description": "Yes ! Everyone is generall healthy",
-                            "selected": true,
+                            "selected": false,
                             "factor": 1
                         },
                         {
@@ -362,7 +362,7 @@
                             "option-id": 17,
                             "name": "investment-hypothetical-gain-sure",
                             "description": "Hypothetical sure gain of x",
-                            "selected": true,
+                            "selected": false,
                             "factor": 1
                         },
                         {
@@ -393,7 +393,7 @@
                             "option-id": 18,
                             "name": "investment-hypothetical-loss-sure",
                             "description": "Hypothetical sure loss of x",
-                            "selected": true,
+                            "selected": false,
                             "factor": 1
                         },
                         {
@@ -425,7 +425,7 @@
                             "option-id": 19,
                             "name": "goal-retirement",
                             "description": "Retirement",
-                            "selected": true,
+                            "selected": false,
                             "factor": 1
                         },
                         {
@@ -439,7 +439,7 @@
                             "option-id": 21,
                             "name": "goal-health-care",
                             "description": "Health Care",
-                            "selected": true,
+                            "selected": false,
                             "factor": 1
                         },
                         {

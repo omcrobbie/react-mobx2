@@ -8,7 +8,7 @@ export class QuestionModelValue {
     validated: boolean = false;
 
     @action
-    setValue(val) {
+    setValue = (val) => {
         this.timestamp = new Date().getTime();
         this.value = val;
     }

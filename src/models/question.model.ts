@@ -20,6 +20,17 @@ export class QuestionModel {
                     .map(val => new QuestionModelModel(val) );
             }
         }
+        //Test if the template string contains the same keys as the model
+        const templateKeys = this.template.match(/(?!<)\S+(?=>)/g);
+        if (templateKeys) {
+            this.variableList = this.variableList.filter(model => {
+                const condition = templateKeys.find(key => model.name === key);
+                if (!condition) {
+                    this.showWarning(`key '${model.name}' does not exist in template string`);
+                }
+                return condition;
+            });
+        }
         autorun(() => {
             if (this.allAnswered) {
                 runInAction(() => this.answered = true);
@@ -32,5 +43,8 @@ export class QuestionModel {
     @computed
     get allAnswered() {
         return this.variableList.every(m => !!m.value.value);   
+    }
+    showWarning(msg) {
+        console.warn(`Question: ${this.order}: `, msg);
     }
 }
