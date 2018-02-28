@@ -5,7 +5,14 @@ import './loading.css';
 @observer
 export class LoaderComponent extends React.Component<any> {
     render() {
-        const { children, predicate } = this.props;
+        const { children, predicate, networkError } = this.props;
+        if (networkError) {
+            return (
+                <div>
+                    {'NETWORK ERROR: ' + networkError}
+                </div>
+            )
+        }
         if (!predicate) {
             return (
                 <div>

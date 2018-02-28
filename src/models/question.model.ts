@@ -3,7 +3,7 @@ import { kebabToCamel } from "../utils/model.util";
 import { observable, autorun, computed, runInAction } from 'mobx';
 
 export class QuestionModel {
-    order: number;
+    page: number;
     setup: string;
     question: string;
     template:string;
@@ -45,6 +45,6 @@ export class QuestionModel {
         return this.variableList.every(m => !!m.value.value);   
     }
     showWarning(msg) {
-        console.warn(`Question: ${this.order}: `, msg);
+        console.warn(`Question: ${this.page}: `, msg);
     }
 }

@@ -1,5 +1,6 @@
 import { observable, computed, action, runInAction, autorun } from 'mobx';
 import { QuestionModel } from '../models/question.model';
+import { sendAnswersService, fetchQuestionsService } from '../utils/http-client.util';
 
 const ClassState = {
     NORM: 'question-normal',
@@ -14,27 +15,40 @@ export class QuestionStore {
     @observable classState: string = ClassState.NORM;
     @observable questionsCompletePercent: number
     @observable complete = false;
+    @observable networkError: string;
+    private clientId: number;
     private currentQuestionIdx: number;
 
     fetchQuestions() {
         this.setLoading(async () => {
-            // TODO: swap this for an actual service call
-            await this.delay(1000);
-            const data = require('./question.data.json');
-            //
-            const clientId = data['client-id'];
+            // await this.delay(1000);
+            // const data = require('./question.data.json');
+            let data: any;
+            try {
+                data = await fetchQuestionsService();
+            } catch (err) {
+                return runInAction(() => this.networkError = err); 
+            }
+            this.clientId = data['client-id'];
             runInAction(() => {
                 this._questions = data['page-list']
                     .map(question => new QuestionModel(question));
             });
             this._questions
                 .forEach(q => q.variableList
-                .forEach(m => m.value.clientId = clientId));
+                .forEach(m => m.value.clientId = this.clientId));
             autorun(() => {
                 const percent = this.percentComplete();
                 runInAction(() =>  this.questionsCompletePercent = percent);
             });
             this.getQuestion();
+        });
+    }
+    sendAnswers() {
+        this.setLoading(async() => {
+            await this.delay(1000); //TODO: swap this for an actual service call
+            sendAnswersService(this.clientId, this._questions)
+            runInAction(() => this.complete = true);
         });
     }
     @computed
@@ -48,7 +62,7 @@ export class QuestionStore {
     async setLoading(asyncFn) {
         this.isLoading = true;
         await asyncFn();
-        runInAction(() => this.isLoading = false);
+        runInAction(() => this.isLoading = false); // need to wrap assignment b/c it is after an async call
     }
     
     get questionCount() {
@@ -60,10 +74,10 @@ export class QuestionStore {
             return;
         }
         this.classState = start;
-        //await this.delay(600);
+        //await this.delay(600); // css exit / enter animations (disabled for now)
         runInAction(() => this.classState = mid);
         this.getQuestion(idx);
-        //await this.delay(10);
+        //await this.delay(10); // css exit / enter animations (disabled for now)
         runInAction(()=> this.classState = 'question-normal question-tween');
     }
     @action
@@ -73,7 +87,7 @@ export class QuestionStore {
     }
     next = () => {
         if (this.questionsComplete === this.questionCount) {
-            runInAction(() => this.complete = true);
+            this.sendAnswers();
         } else {
             this.setQuestion(
                 this.currentQuestionIdx + 1,

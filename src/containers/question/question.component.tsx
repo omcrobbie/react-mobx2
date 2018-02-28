@@ -28,10 +28,11 @@ export class QuestionComponent extends React.Component<{questionStore?: Question
             isLoading, 
             classState,
             complete,
-            questionsCompletePercent 
+            questionsCompletePercent,
+            networkError 
         } = this.questionStore;
         return (
-            <LoaderComponent predicate={isLoading}>
+            <LoaderComponent predicate={isLoading} networkError={networkError}>
                 <QuestionContentComponent
                     classState={classState}
                     currentQuestion={currentQuestion}

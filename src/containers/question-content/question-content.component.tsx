@@ -5,14 +5,13 @@ import { observer } from 'mobx-react';
 import { ProgressbarComponent } from '../../components/progres-bar';
 
 export const QuestionContentComponent = observer((props) => {
-    const { order, question, setup, requiredToProceed, answered} = props.currentQuestion;
+    const { page, question, setup, requiredToProceed, answered} = props.currentQuestion;
     const isComplete = () => {
         if (!props.complete) {
             return (
                 <div>
-                    <ProgressbarComponent progress={props.questionsCompletePercent} />
                     <div className="question-container">
-                        <p className="question-num">{ 'Question: '+ order}</p>
+                        <p className="question-num">{ 'Question: '+ page}</p>
                         <p className="question-header">{question}</p>
                         <QuestionbodyComponent question={props.currentQuestion} />
                         <p className="question-setup">{setup}</p>
@@ -32,6 +31,7 @@ export const QuestionContentComponent = observer((props) => {
     }
     return (
         <div className={"question-view " + props.classState }>
+            <ProgressbarComponent progress={props.questionsCompletePercent} />
             {isComplete()}
         </div>
     )
